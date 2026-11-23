@@ -1,40 +1,34 @@
-# Gen5W Climate Mini — v0.1 diagnostic
+# Gen5W Climate Mini — v0.2 persistent-overlay diagnostic
 
-A minimal Android 4.4.2-compatible floating climate **UI prototype** for Hyundai/Kia Gen5W infotainment.
+Small experimental floating HVAC **UI only** for Hyundai/Kia Gen5W (Android 4.4.2 compatible). The launcher icon depicts a climate/air-conditioning fan rather than the default Android robot.
 
-> **IMPORTANT:** This release has **no access to vehicle HVAC state** and **does not send HVAC commands**. All four indicators intentionally display `?`. It is **NOT** a working climate controller.
+**Warning:** This is still **not** a working vehicle climate controller. The four tiles show `?`, since no verified HVAC read or actuation API is integrated. Touching a tile only displays a message; it never issues vehicle commands.
 
-## Target environment
+## What changed since v0.1
 
-- Korean-market 2022 Hyundai IONIQ 5, Gen5W V039 (`NEEV.KOR.0000.V039.001.260902`), **not yet validated on vehicle**.
-- NEMESIS installed. JMK may be present. Compatibility with JMK / Android Auto overlays is not validated.
-- Minimum Android SDK 19 (Android 4.4). Java 8 sources.
+- Tries `TYPE_SYSTEM_ALERT` for API 19–25 and falls back to the v0.1 `TYPE_PHONE` mode if rejected; keeps `TYPE_APPLICATION_OVERLAY` for API 26+. This may allow the window to stay on top of other apps on Gen5W.
+- Keeps the floating service in the foreground and uses `START_STICKY`; requests restoration after system process recycling. Explicitly closing the popup disables restoration.
+- Uses `stopWithTask=false` so leaving/closing the launcher Activity does not intentionally stop the overlay.
+- Close button is separate from the draggable title; **−** collapses to a compact title strip.
+- Remembers the manually dragged position.
+- Climate-themed launcher and notification icons.
 
-## Build with GitHub Actions
+Neither foreground services nor alert-window types can override proprietary head-unit window manager restrictions. Behavior over JMK, built-in navigation, Android Auto, reversing-camera and safety-warning UIs **is not yet validated**. Do not force windows over safety-critical interfaces.
 
-1. Create a new GitHub repository (e.g., `gen5w-climate-mini`).
-2. Upload **all contents** of this project, keeping `.github/workflows/build-apk.yml` and folders intact.
-3. Open **Actions → Build diagnostic APK → Run workflow** (or push to `main`).
-4. After successful build, download artifact `Gen5W-ClimateMini-v0.1-diagnostic-APK` and extract `app-debug.apk`.
+## Build APK in GitHub
 
-## Local build
+Upload the unpacked project folder's **contents** to the same GitHub repository, retaining directory structure and `.github/workflows/build-apk.yml`. Open the **Actions** tab → **Build diagnostic APK** → run workflow (or push to `main`). Download the newest artifact `Gen5W-ClimateMini-APK`, unzip, install `app-debug.apk` via NEMESIS's supported APK installation interface.
 
-Requires Android SDK, Gradle 8.7+, Java 17: `gradle assembleDebug`.
+Local: Java 17, Android SDK, Gradle 8.7+, `gradle assembleDebug`.
 
-## Test only while parked
+## Parked test (Korean IONIQ 5 Gen5W V039)
 
-1. Install the debug APK through NEMESIS's supported Android APK installation interface. This project is **not** an installable `NEMESIS.data` package.
-2. Open **Gen5W Climate Mini**, grant overlay permission if required, tap **Open mini window**.
-3. Drag the header to move; tap the header without moving to close.
-4. Indicators remain unknown (`?`) and buttons display **vehicle control not connected**.
-5. Stop the overlay and uninstall if it covers safety warnings or causes focus/input issues.
+1. Install v0.2 over v0.1 if signatures match. If Android reports signature mismatch, uninstall old v0.1 before reinstalling.
+2. Open app → **미니창 열기**. Grant overlay permission if the operating system asks (Android 6+).
+3. While parked, tap vehicle Home, stock navigation, JMK launcher, or Android Auto. Check whether the mini window stays visible.
+4. Drag the title to move; press **−** to minimize and **+** to expand; press **×** to stop.
+5. While parked, ensure the reverse-camera, critical vehicle warnings, map controls and touch input remain unobstructed. Close the popup if any conflict appears.
+6. If it still disappears, report **whether it disappears after Home, after JMK, or only on wireless Android Auto**, and whether opening the app again restores the original overlay or creates a new one. That helps distinguish window layering from service lifecycle.
+7. This build does **not** open automatically when the vehicle boots.
 
-## Roadmap / prerequisites before live control
-
-- Determine read-only HVAC API state names for DRIVER ONLY, A/C, HEAT, SYNC on **this exact firmware**.
-- Verify reliable state changes initiated in stock climate UI; never infer from previous button taps.
-- Identify and verify safe actuator API calls separately with explicit confirmation and parked testing.
-- Add app-level permission checks, rollback, error state, and tests for reverse camera and warning overlays.
-- Add NEMESIS installation packaging only after confirming package schema and device compatibility.
-
-No root/service commands are included. This avoids speculative vehicle control calls and preserves the existing JMK wireless Android Auto / HUD setup.
+Vehicle API validation and read-only state discovery are future prerequisites, not claims of current support. No changes to NEMESIS/JMK, no system partitions modified, no root access used.
