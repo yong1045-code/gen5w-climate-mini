@@ -1,10 +1,13 @@
 Gen5W Climate Mini
 
 
-현대 아이오닉 5 Gen5W + NEMESIS용 미니 공조 제어 위젯입니다.
+한국어
 
 
-한국형 2022년식 아이오닉 5 V039에서 개발·시험 중인 비공식 앱입니다.
+현대·기아 Gen5W 내비게이션에서 사용하는 NEMESIS 기반 미니 공조 제어 앱입니다.
+
+
+지도 화면에 작은 공조 위젯을 띄워 별도의 공조 화면으로 이동하지 않고 주요 기능을 조작할 수 있습니다.
 
 
 주요 기능
@@ -12,49 +15,48 @@ Gen5W Climate Mini
 
 
 
-DRIVER ONLY · A/C · HEAT · SYNC 원터치 제어 및 공조 상태 표시
+DRIVER ONLY · A/C · HEAT · SYNC 원터치 제어
 
 
-HEAT ON 시 주황색 강조
+공조 기능의 ON/OFF 상태 표시
 
 
-위젯 위치 이동·저장 및 재부팅 후 복원
+위젯 위치 이동 및 저장
 
 
-지도와 Climate Mini 앱 화면에 위젯 표시
-
-
-
-
-설치 방법
+재부팅 후 위젯 자동 복원
 
 
 
 
-GitHub Releases에서 최신 NEMESIS USB 설치 ZIP을 다운로드합니다.
+
+English
 
 
-압축 해제 후 NEMESIS.data와 packages/ 폴더를 USB 최상위에 복사합니다.
+Gen5W Climate Mini is a compact climate control app for Hyundai and Kia Gen5W infotainment systems running NEMESIS.
 
 
-차량에서 NEMESIS 설치·업데이트를 진행합니다.
+It adds a small floating climate control widget to the navigation map, allowing quick access to essential climate functions without switching to the full climate screen.
 
 
-
-
-안내
-
-
-
-
-NAV 검색/경로 화면 자동 숨김과 터치음은 개선 중입니다.
-
-
-다른 차종 및 펌웨어 호환성은 검증되지 않았습니다.
-
-
-테스트는 정차 상태에서 진행하고, 후방카메라와 안전 경고 표시를 방해하는 경우 위젯을 종료하세요.
+Key Features
 
 
 
 
+One-touch control of DRIVER ONLY, A/C, HEAT, and SYNC
+
+
+Real-time ON/OFF status display
+
+
+Draggable widget with saved position
+
+
+Automatic widget restoration after reboot
+
+
+
+
+
+Download Latest Release
